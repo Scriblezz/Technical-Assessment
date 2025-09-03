@@ -91,9 +91,9 @@ $app->configure('app');
 |
 */
 
-// $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
-// $app->register(App\Providers\EventServiceProvider::class);
+$app->register(App\Providers\AppServiceProvider::class);
+$app->register(App\Providers\AuthServiceProvider::class);
+$app->register(App\Providers\EventServiceProvider::class);
 
 $app->register(Illuminate\Database\MigrationServiceProvider::class);
 
@@ -116,6 +116,10 @@ $app->router->group([
 });
 
 $app->configure('jwt');
+
+$app->routeMiddleware([
+    'jwt.auth' => Tymon\JWTAuth\Middleware\GetUserFromToken::class
+]);
 
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 
