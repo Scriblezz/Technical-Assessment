@@ -116,7 +116,6 @@ GitHub Actions workflow `.github/workflows/ci.yml`:
 To enable container image publishing, add a registry login step and use build-push-action with tags.
 
 ## Notes / Future improvements
-- Move PostsController from file-backed storage to MySQL for full DB usage (currently JSON for simplicity)
 - Add JWT middleware protection to post creation and sensitive routes
 - Add Redis cache provider config to Lumen if switching CACHE_DRIVER=redis in production
 - Add Docker multi-stage React build and serve static assets via Nginx for prod
