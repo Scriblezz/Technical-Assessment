@@ -35,7 +35,10 @@ services:
       DB_DATABASE: ${DB_DATABASE:-tech_assessment}
       DB_USERNAME: ${DB_USERNAME:-root}
       DB_PASSWORD: ${DB_PASSWORD:-root}
-      CACHE_DRIVER: file
+      CACHE_DRIVER: redis
+      REDIS_CLIENT: phpredis
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
     ports:
       - "8000:80"
     volumes:

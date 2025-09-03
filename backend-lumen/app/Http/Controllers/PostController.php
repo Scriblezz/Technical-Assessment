@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\Cache;
 
 class PostController extends BaseController
 {
@@ -15,13 +16,17 @@ class PostController extends BaseController
 
     public function index()
     {
-    $posts = Post::query()->orderBy('id')->get(['id', 'title', 'content', 'user_id', 'created_at']);
-    return response()->json($posts);
+        $posts = Cache::remember('posts', 600, function () {
+            return Post::query()->orderBy('id')->get(['id', 'title', 'content', 'user_id', 'created_at']);
+        });
+        return response()->json($posts);
     }
 
     public function show($id)
     {
-        $post = Post::find($id);
+        $post = Cache::remember("post:$id", 600, function () use ($id) {
+            return Post::find($id);
+        });
         if (!$post) {
             return response()->json(['message' => 'Post not found'], 404);
         }
@@ -35,11 +40,14 @@ class PostController extends BaseController
             'content' => 'required',
         ]);
 
-        $post = Post::create([
+    $post = Post::create([
             'title' => $request->input('title'),
             'content' => $request->input('content'),
             'user_id' => $request->input('user_id', 1),
         ]);
+    // Invalidate caches
+    Cache::forget('posts');
+    Cache::forget("post:{$post->id}");
 
         return response()->json($post, 201);
     }

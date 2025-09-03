@@ -60,6 +60,8 @@ $app->singleton(
 */
 
 $app->configure('app');
+$app->configure('cache');
+$app->configure('database');
 
 /*
 |--------------------------------------------------------------------------
@@ -97,6 +99,10 @@ $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
 
 $app->register(Illuminate\Database\MigrationServiceProvider::class);
+// Enable cache services in Lumen
+$app->register(Illuminate\Cache\CacheServiceProvider::class);
+// Redis factory binding and connections
+$app->register(Illuminate\Redis\RedisServiceProvider::class);
 
 
 /*
