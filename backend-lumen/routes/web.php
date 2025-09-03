@@ -16,6 +16,9 @@
 $router->get('/', function () use ($router) {
     return 'Lumen is working!';
 });
+$router->post('/api/test', function () {
+    return response()->json(['message' => 'Routing works']);
+});
 
 $router->post('/api/register', 'AuthController@register');
 $router->post('/api/login', 'AuthController@login');
