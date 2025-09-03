@@ -1,0 +1,8 @@
+vendor
+node_modules
+storage/logs
+.git
+.env
+composer.lock
+tests
+*.md
