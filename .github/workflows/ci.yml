@@ -48,8 +48,14 @@ jobs:
           echo "DB_DATABASE=tech_assessment" >> .env
           echo "DB_USERNAME=root" >> .env
           echo "DB_PASSWORD=root" >> .env
-          echo "CACHE_DRIVER=file" >> .env
+          # Use in-memory cache during tests to avoid filesystem permissions
+          echo "CACHE_DRIVER=array" >> .env
+          # Provide a strong JWT secret for token generation in tests
+          echo "JWT_SECRET=p1WqkL8FZ2yNc4R7tH9vJ3mQ6sUa8Xb2e5Rg7Tn9Yp3Wq6Zs9Ud2Fb4Kc7Lm2Qp" >> .env
           php -r "file_exists('bootstrap/cache') || mkdir('bootstrap/cache', 0777, true);"
+          php -r "is_dir('storage/framework/cache') || mkdir('storage/framework/cache', 0777, true);"
+          php -r "is_dir('storage/framework/sessions') || mkdir('storage/framework/sessions', 0777, true);"
+          php -r "is_dir('storage/framework/views') || mkdir('storage/framework/views', 0777, true);"
       - name: Run migrations
         run: php artisan migrate --force
       - name: Seed database
