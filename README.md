@@ -23,6 +23,7 @@ Modern microservice-style app with:
 	- Redis (7-alpine)
 	- MySQL (8)
 
+
 - Ports
 	- API: http://localhost:8000
 	- Cache API: http://localhost:5000
