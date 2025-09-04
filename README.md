@@ -1,5 +1,7 @@
 # Technical Assessment – Lumen API, Node Cache, React Frontend
 
+[Link to Video explanation](https://www.loom.com/share/07bbb006a8354d9eb6879e6de266122e)
+
 Modern microservice-style app with:
 - Backend (Lumen, PHP 8.2) with JWT auth and REST endpoints
 - Cache layer (Node.js + Redis) for fast post retrieval
@@ -132,3 +134,4 @@ Import it in Postman:
 - MySQL healthcheck: compose waits for MySQL before starting the API
 - If migrations fail due to cache store, ensure CACHE_DRIVER=file in `.env` during setup
 - Port conflicts: if you already run Redis or MySQL locally, remove the host port binds or change ports in compose
+
