@@ -13,7 +13,7 @@ Modern microservice-style app with:
 - Services
 	- Lumen API (PHP 8.2 + Apache)
 		- JWT-based auth using tymon/jwt-auth
-		- Posts endpoints backed by storage JSON (simple demo) and DB migrations for users/posts
+		- Posts endpoints backed by MySQL via Eloquent; Redis caching enabled for GETs
 	- Node Cache (Express + redis client)
 		- Endpoints proxy to API and cache results in Redis
 	- React Frontend (Create React App)
@@ -68,7 +68,7 @@ Default seeded user for testing
 - password: password
 
 Environment
-- API reads env from `backend-lumen/.env`. For Docker, DB_HOST=mysql and CACHE_DRIVER=file are set by compose. Redis is available as `redis`.
+- API reads env from `backend-lumen/.env`. For Docker, DB_HOST=mysql and CACHE_DRIVER=redis are set by compose. Redis is available as `redis`.
 - Node cache uses env:
 	- PORT=5000
 	- REDIS_URL=redis://redis:6379
@@ -115,10 +115,17 @@ GitHub Actions workflow `.github/workflows/ci.yml`:
 
 To enable container image publishing, add a registry login step and use build-push-action with tags.
 
+## API Docs (Postman)
+An exportable Postman collection is available at `tools/postman_collection.json`.
+
+Import it in Postman:
+1) File > Import > Select `tools/postman_collection.json`
+2) Use the Auth > Login request to obtain a JWT, copy the `token` value.
+3) Set the collection variable `token` and call “Create Post (JWT)”.
+
 ## Notes / Future improvements
-- Add JWT middleware protection to post creation and sensitive routes
-- Add Redis cache provider config to Lumen if switching CACHE_DRIVER=redis in production
-- Add Docker multi-stage React build and serve static assets via Nginx for prod
+- Add update/delete endpoints with cache invalidation
+- Docker multi-stage React build and serve static assets via Nginx for prod
 - Add GitHub Actions deploy job (e.g., to Azure Web App for Containers)
 
 ## Troubleshooting

@@ -1,0 +1,140 @@
+{
+  "info": {
+    "name": "Technical-Assessment API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "c2a42c3a-3a1a-4f7a-9e5a-000000000000"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"test@example.com\",\n  \"password\": \"password\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api","register"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api","login"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Posts",
+      "item": [
+        {
+          "name": "List Posts",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8000/api/posts",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api","posts"]
+            }
+          }
+        },
+        {
+          "name": "Get Post by Id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8000/api/posts/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api","posts","1"]
+            }
+          }
+        },
+        {
+          "name": "Create Post (JWT)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Hello\",\n  \"content\": \"World\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/posts",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api","posts"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cache Proxy",
+      "item": [
+        {
+          "name": "Cache List Posts",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:5000/cache/posts",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["cache","posts"]
+            }
+          }
+        },
+        {
+          "name": "Cache Get Post by Id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:5000/cache/posts/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["cache","posts","1"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "token", "value": "" }
+  ]
+}
