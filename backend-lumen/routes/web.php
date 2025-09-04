@@ -20,6 +20,7 @@ $router->post('/api/test', function () {
     return response()->json(['message' => 'Routing works']);
 });
 
+
 $router->post('/api/register', 'AuthController@register');
 $router->post('/api/login', 'AuthController@login');
 $router->get('/api/posts', 'PostController@index');

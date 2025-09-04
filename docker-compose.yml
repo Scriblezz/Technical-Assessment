@@ -39,6 +39,7 @@ services:
       REDIS_CLIENT: phpredis
       REDIS_HOST: redis
       REDIS_PORT: 6379
+      JWT_SECRET: p1WqkL8FZ2yNc4R7tH9vJ3mQ6sUa8Xb2e5Rg7Tn9Yp3Wq6Zs9Ud2Fb4Kc7Lm2Qp
     ports:
       - "8000:80"
     volumes:

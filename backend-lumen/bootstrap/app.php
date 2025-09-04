@@ -62,6 +62,7 @@ $app->singleton(
 $app->configure('app');
 $app->configure('cache');
 $app->configure('database');
+$app->configure('auth');
 
 /*
 |--------------------------------------------------------------------------
@@ -99,10 +100,14 @@ $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
 
 $app->register(Illuminate\Database\MigrationServiceProvider::class);
+// Core auth services used by jwt-auth
+$app->register(Illuminate\Auth\AuthServiceProvider::class);
 // Enable cache services in Lumen
 $app->register(Illuminate\Cache\CacheServiceProvider::class);
 // Redis factory binding and connections
 $app->register(Illuminate\Redis\RedisServiceProvider::class);
+// Ensure hashing services are available for Hash::make / Hash::check
+$app->register(Illuminate\Hashing\HashServiceProvider::class);
 
 
 /*
@@ -125,7 +130,7 @@ $app->router->group([
 $app->configure('jwt');
 
 $app->routeMiddleware([
-    'jwt.auth' => Tymon\JWTAuth\Middleware\GetUserFromToken::class
+    'jwt.auth' => Tymon\JWTAuth\Http\Middleware\Authenticate::class
 ]);
 
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);

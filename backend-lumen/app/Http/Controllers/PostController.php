@@ -35,20 +35,26 @@ class PostController extends BaseController
 
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'content' => 'required',
-        ]);
+        try {
+            $this->validate($request, [
+                'title' => 'required',
+                'content' => 'required',
+            ]);
 
-    $post = Post::create([
-            'title' => $request->input('title'),
-            'content' => $request->input('content'),
-            'user_id' => $request->input('user_id', 1),
-        ]);
-    // Invalidate caches
-    Cache::forget('posts');
-    Cache::forget("post:{$post->id}");
+            $post = Post::create([
+                'title' => $request->input('title'),
+                'content' => $request->input('content'),
+                'user_id' => $request->input('user_id', 1),
+            ]);
 
-        return response()->json($post, 201);
+            // Invalidate caches
+            Cache::forget('posts');
+            Cache::forget("post:{$post->id}");
+
+            return response()->json($post, 201);
+        } catch (\Throwable $e) {
+            \Log::error('POST /api/posts failed', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+            return response()->json(['error' => 'Failed to create post', 'message' => $e->getMessage()], 500);
+        }
     }
 }
